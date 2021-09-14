@@ -1,21 +1,29 @@
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.Scanner;
 
 public class Matriz {
     private int linhas;
     private int colunas;
     private int[][] matriz;
+    private int escolha;
+    private int linha_escolhida;
+    private int coluna_escolhida;
+    private boolean prosseguir;
+
+    Scanner scan = new Scanner(System.in);
 
     public Matriz(){
       setLinhas(9);
       setColunas(9);
+      setProsseguir(true);
 
       this.matriz = new int[getLinhas()][getColunas()];
 
       this.gerarMatriz();
     };
 
-    // Linhas
+    // Getters E Setters
     public int getLinhas() {
       return this.linhas;
     }
@@ -23,13 +31,107 @@ public class Matriz {
       this.linhas = li;
     }
 
-    //Colunas
     public int getColunas() {
       return this.colunas;
     }
     public void setColunas(int co) {
       this.colunas = co;
     }
+
+    public int getEscolha() {
+        return escolha;
+    }
+    public void setEscolha(int escolha) {
+        this.escolha = escolha;
+    }
+
+    public int getLinha_escolhida() {
+        return linha_escolhida;
+    }
+    public void setLinha_escolhida(int linha_escolhida) {
+        this.linha_escolhida = linha_escolhida;
+    }
+
+    public int getColuna_escolhida() {
+        return coluna_escolhida;
+    }
+    public void setColuna_escolhida(int coluna_escolhida) {
+        this.coluna_escolhida = coluna_escolhida;
+    }
+
+    public boolean getProsseguir() {
+        return prosseguir;
+    }
+    public void setProsseguir(boolean prosseguir) {
+        this.prosseguir = prosseguir;
+    }
+
+    // Métodos
+    public void jogada() {
+        System.out.println("----- Suas opções -----");
+        System.out.println("[1] Adicionar um número ");
+        System.out.println("[2] Remover um número ");
+        System.out.println("[3] Ver tabuleiro ");
+        System.out.println("[4] Parar de jogar");
+        System.out.print("Oque você deseja fazer? ");
+        this.escolha = scan.nextInt();
+
+        if (this.escolha == 1){
+            addNumber();
+        } else if (this.escolha == 2) {
+            removeNumber();
+        } else if (this.escolha == 3) {
+            imprimirMatriz();
+        } else if (this.escolha == 4) {
+            System.out.println("================================");
+            System.out.println("      Encerrando o jogo       ");
+            System.out.println("================================");
+            setProsseguir(false);
+        } else {
+            System.out.println("Escolha Inválida! Tente Novamente!");
+        };
+
+    };
+
+    public void addNumber() {
+        System.out.print("Informe a linha em que você deseja adicionar o número: ");
+        this.linha_escolhida = scan.nextInt();
+        System.out.print("Informe a coluna em que você deseja adicionar o número: ");
+        this.coluna_escolhida = scan.nextInt();
+
+        System.out.print("Informe o número que quer adicionar: ");
+        this.escolha = scan.nextInt();
+
+        if (matriz[getLinha_escolhida()][getColuna_escolhida()] == 0) {
+            this.matriz[getLinha_escolhida()][getColuna_escolhida()] = escolha;
+            System.out.println("================================");
+            System.out.println(" Número adicionado com sucesso! ");
+            System.out.println("================================");
+            imprimirMatriz();
+        } else {
+            System.out.println("Este lugar já está preenchido! Tente novamente");
+        };
+
+    };
+
+    public void removeNumber() {
+        System.out.print("Informe a linha em que você deseja remover o número: ");
+        this.linha_escolhida = scan.nextInt();
+        System.out.print("Informe a coluna em que você deseja remover o número: ");
+        this.coluna_escolhida = scan.nextInt();
+
+        if (matriz[getLinha_escolhida()][getColuna_escolhida()] != 0) {
+            this.matriz[getLinha_escolhida()][getColuna_escolhida()] = 0;
+            System.out.println("================================");
+            System.out.println("  Número removido com sucesso!  ");
+            System.out.println("================================");
+            imprimirMatriz();
+        } else {
+            System.out.println("Este lugar já está preenchido! Tente novamente");
+        };
+
+
+    };
 
     private void gerarMatriz() {
       Random gerador = new Random();
@@ -98,7 +200,8 @@ public class Matriz {
     }
 
     public void resetarMatriz() {
-      this.gerarMatriz();
+        System.out.println("Criando uma nova matriz...");
+        this.gerarMatriz();
     };
 
 };
