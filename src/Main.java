@@ -17,5 +17,9 @@ public class Main {
             };
         }
 
+        System.out.println("===========================================================");
+        System.out.println("Muito obrigado por jogar conosco " + usuario.getNome() + "!");
+        System.out.println("===========================================================");
+
     }
 }
