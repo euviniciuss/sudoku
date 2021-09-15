@@ -1,11 +1,11 @@
-import java.util.ArrayList;
-import java.util.Random;
 import java.util.Scanner;
 
 public class Matriz {
     private int linhas;
     private int colunas;
+    private int[][] inicio_matriz;
     private int[][] matriz;
+    private int[][] gabarito;
     private int escolha;
     private int linha_escolhida;
     private int coluna_escolhida;
@@ -17,8 +17,6 @@ public class Matriz {
       setLinhas(9);
       setColunas(9);
       setProsseguir(true);
-
-      this.matriz = new int[getLinhas()][getColunas()];
 
       this.gerarMatriz();
     };
@@ -88,7 +86,9 @@ public class Matriz {
             System.out.println("================================");
             setProsseguir(false);
         } else {
+            System.out.println("==================================");
             System.out.println("Escolha Inválida! Tente Novamente!");
+            System.out.println("==================================");
         };
 
     };
@@ -102,14 +102,23 @@ public class Matriz {
         System.out.print("Informe o número que quer adicionar: ");
         this.escolha = scan.nextInt();
 
-        if (matriz[getLinha_escolhida()][getColuna_escolhida()] == 0) {
-            this.matriz[getLinha_escolhida()][getColuna_escolhida()] = escolha;
-            System.out.println("================================");
-            System.out.println(" Número adicionado com sucesso! ");
-            System.out.println("================================");
-            imprimirMatriz();
+        if ((this.matriz[getLinha_escolhida()][getColuna_escolhida()] == 0) ) {
+            if (escolha == this.gabarito[getLinha_escolhida()][getColuna_escolhida()]) {
+                this.matriz[getLinha_escolhida()][getColuna_escolhida()] = escolha;
+
+                System.out.println("================================");
+                System.out.println(" Número adicionado com sucesso! ");
+                System.out.println("================================");
+                imprimirMatriz();
+            } else {
+                System.out.println("============================================================================================");
+                System.out.println("A sua escolha de número é inválida de acordo com as regras do jogo! Tente com outro número!");
+                System.out.println("============================================================================================");
+            };
         } else {
+            System.out.println("===============================================");
             System.out.println("Este lugar já está preenchido! Tente novamente");
+            System.out.println("===============================================");
         };
 
     };
@@ -121,72 +130,62 @@ public class Matriz {
         this.coluna_escolhida = scan.nextInt();
 
         if (matriz[getLinha_escolhida()][getColuna_escolhida()] != 0) {
-            this.matriz[getLinha_escolhida()][getColuna_escolhida()] = 0;
-            System.out.println("================================");
-            System.out.println("  Número removido com sucesso!  ");
-            System.out.println("================================");
-            imprimirMatriz();
+            if (inicio_matriz[getLinha_escolhida()][getColuna_escolhida()] == 0) {
+                this.matriz[getLinha_escolhida()][getColuna_escolhida()] = 0;
+                System.out.println("================================");
+                System.out.println("  Número removido com sucesso!  ");
+                System.out.println("================================");
+                imprimirMatriz();
+            } else {
+                System.out.println("======================================================");
+                System.out.println("Você não pode remover um número previamente atribuído!");
+                System.out.println("======================================================");
+            };
         } else {
+            System.out.println("==============================================");
             System.out.println("Este lugar já está preenchido! Tente novamente");
+            System.out.println("==============================================");
         };
 
 
     };
 
     private void gerarMatriz() {
-      Random gerador = new Random();
+        this.inicio_matriz = new int[][] {
+                {9,4,0, 1,0,2, 0,5,8},
+                {6,0,0, 0,5,0, 0,0,4},
+                {0,0,2, 4,0,3, 1,0,0},
+                {0,2,0, 0,0,0, 0,6,0},
+                {5,0,8, 0,2,0, 4,0,1},
+                {0,6,0, 0,0,0, 0,8,0},
+                {0,0,1, 6,0,8, 7,0,0},
+                {7,0,0, 0,4,0, 0,0,3},
+                {4,3,0, 5,0,9, 0,1,2}
+        };
 
-      ArrayList<Integer> historic_elements = new ArrayList<>();
+        this.matriz = new int[][] {
+            {9,4,0, 1,0,2, 0,5,8},
+            {6,0,0, 0,5,0, 0,0,4},
+            {0,0,2, 4,0,3, 1,0,0},
+            {0,2,0, 0,0,0, 0,6,0},
+            {5,0,8, 0,2,0, 4,0,1},
+            {0,6,0, 0,0,0, 0,8,0},
+            {0,0,1, 6,0,8, 7,0,0},
+            {7,0,0, 0,4,0, 0,0,3},
+            {4,3,0, 5,0,9, 0,1,2}
+        };
 
-      int linha_aleatoria = 0;
-      int coluna_aleatoria = 0;
-
-      // gerar matriz
-      for (int quadrante = 1; quadrante <= 9; quadrante++) {
-        historic_elements.clear();
-        for (int linha = 0; linha <= 2; linha++) {
-          for (int coluna = 0; coluna <= 2; coluna++) {
-            // Verificando qual quadrante é para atribuir números a linhas e colunas
-            if (quadrante == 1) {
-              linha_aleatoria = gerador.nextInt(2);  // gerar linha de 0 a 2;
-              coluna_aleatoria = gerador.nextInt(2); // gerar coluna de 0 a 2;
-            } else if (quadrante == 2) {
-              linha_aleatoria = gerador.nextInt(2); // gerar linha de 0 a 2
-              coluna_aleatoria = gerador.nextInt(3) + 3; // gerar coluna de 3 a 5
-            } else if (quadrante == 3) {
-              linha_aleatoria = gerador.nextInt(2);  // gerar linha de 0 a 2
-              coluna_aleatoria = gerador.nextInt(3) + 6; // gerar coluna de 6 a 8
-            } else if (quadrante == 4) {
-              linha_aleatoria = gerador.nextInt(3) + 3; // gerar linha de 3 a 5;
-              coluna_aleatoria = gerador.nextInt(2); // gerar coluna de 0 a 2;
-            } else if (quadrante == 5) {
-              linha_aleatoria = gerador.nextInt(3) + 3; // gerar linha de 3 a 5;
-              coluna_aleatoria = gerador.nextInt(3) + 3; // gerar coluna de 3 a 5
-            } else if (quadrante == 6) {
-              linha_aleatoria = gerador.nextInt(3) + 3; // gerar linha de 3 a 5;
-              coluna_aleatoria = gerador.nextInt(3) + 6; // gerar coluna de 6 a 8
-            } else if (quadrante == 7) {
-              linha_aleatoria = gerador.nextInt(3) + 6; // gerar linha de 6 a 8;
-              coluna_aleatoria = gerador.nextInt(2); // gerar coluna de 0 a 2;
-            } else if (quadrante == 8) {
-              linha_aleatoria = gerador.nextInt(3) + 6; // gerar linha de 6 a 8;
-              coluna_aleatoria = gerador.nextInt(3) + 3; // gerar coluna de 3 a 5
-            } else if (quadrante == 9) {
-              linha_aleatoria = gerador.nextInt(3) + 6; // gerar linha de 6 a 8;
-              coluna_aleatoria = gerador.nextInt(3) + 6; // gerar linha de 6 a 8;
-            } else {
-              System.out.println("Inválido!");
-            }
-
-            int numero_aleatorio = gerador.nextInt(10);
-
-            if (historic_elements.indexOf(numero_aleatorio) < 0) {
-              this.matriz[linha_aleatoria][coluna_aleatoria] = numero_aleatorio;
-              historic_elements.add(numero_aleatorio);
-            }
-          }
-        }
-      }
+        this.gabarito = new int[][] {
+                {9,4,7, 1,6,2, 3,5,8},
+                {6,1,3, 8,5,7, 9,2,4},
+                {8,5,2, 4,9,3, 1,7,6},
+                {1,2,9, 3,8,4, 5,6,7},
+                {5,7,8, 9,2,6, 4,3,1},
+                {3,6,4, 7,1,5, 2,8,9},
+                {2,9,1, 6,3,8, 7,4,5},
+                {7,8,5, 2,4,1, 6,9,3},
+                {4,3,6, 5,7,9, 8,1,2}
+        };
 
     }
 
@@ -198,10 +197,5 @@ public class Matriz {
             System.out.println();
         }
     }
-
-    public void resetarMatriz() {
-        System.out.println("Criando uma nova matriz...");
-        this.gerarMatriz();
-    };
 
 };
