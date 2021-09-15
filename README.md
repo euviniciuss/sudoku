@@ -23,11 +23,9 @@ Construído por alunos dos cursos de tecnologia da [UNDB](https://www.undb.edu.b
 
 2. Executando a Aplicação:
 
-```sh
+  - Abra o arquivo sudoku em uma IDE
+  - Execute a classe Main na IDE que você escolher
 
-  $ Abra o arquivo sudoku em uma IDE
-  $ Rodar a classe Main na IDE que você escolher
-```
 ## 📄Sobre o projeto
 É criado uma matriz pré-determinada de tamanho 9x9 onde o usuário vai poder fazer suas jogadas!
 <p align="flex-start">
