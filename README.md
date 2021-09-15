@@ -25,7 +25,7 @@ Construído por alunos dos cursos de tecnologia da [UNDB](https://www.undb.edu.b
 
 ```sh
 
-  $ cd sudoku
+  $ Abra o arquivo sudoku em uma IDE
   $ Rodar a classe Main na IDE que você escolher
 ```
 ## 📄Sobre o projeto
