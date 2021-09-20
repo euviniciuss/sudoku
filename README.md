@@ -9,6 +9,7 @@ Construído por alunos dos cursos de tecnologia da [UNDB](https://www.undb.edu.b
 - Laryssa Pereira
 - Adrian Vinicius
 - Amanda Carvalho
+- Josué Nina
 
 ## ▶️Como rodar
   ### **Pré-requisitos**
